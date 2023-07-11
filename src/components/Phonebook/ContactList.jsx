@@ -1,25 +1,17 @@
 import css from './Phonebook.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
 import * as contactsOperation from '../../redux/contactsOperation';
+import { selectFilter } from '../../redux/selectors.js';
 
 const ContactList = () => {
   const contactsStore = useSelector(state => state.contacts.items);
   console.log(contactsStore);
-  const filterStore = useSelector(state => state.filter);
+  const filterStore = useSelector(selectFilter);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(contactsOperation.fetchContacts());
-  }, [dispatch]);
 
   const filteredContacts = contactsStore.filter(contact =>
     contact.name?.toLowerCase().includes(filterStore.toLowerCase())
   );
-
-  // const filteredContacts = contactsStore.data?.filter(contact =>
-  //   contact.name?.toLowerCase()
-  // );
 
   return filteredContacts?.length > 0 ? (
     filteredContacts.length > 0 ? (

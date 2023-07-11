@@ -1,61 +1,35 @@
+import { useDispatch, useSelector } from 'react-redux';
 import ContactForm from './Phonebook/ContactForm.jsx';
 import ContactList from './Phonebook/ContactList.jsx';
 import Filtre from './Phonebook/Filter.jsx';
+import { selectError, selectIsLoading } from '../redux/selectors.js';
+import { useEffect } from 'react';
+import { fetchContacts } from '../redux/contactsOperation.js';
 
 export const App = () => {
-  // const [contacts, setContacts] = useState([]);
-  // const [filter, setFilter] = useState('');
+  const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
 
-  // function addContact(name, number) {
-  // const contact = {
-  //   id: nanoid(),
-  //   name,
-  //   number,
-  // };
-
-  // if (contacts.filter(elem => elem.name === name).length) {
-  //   alert('Вже є');
-  //   return;
-  // }
-
-  // setContacts([contact, ...contacts]);
-  // }
-
-  // function getVisibleContacts() {
-  //   const normalizedFilter = filter.toLowerCase();
-  //   return contacts.filter(
-  //     contact =>
-  //       contact.name.toLowerCase().includes(normalizedFilter) ||
-  //       contact.number.toLowerCase().includes(normalizedFilter)
-  //   );
-  // }
-
-  // useEffect(() => {
-  //   const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
-  //   if (parsedContacts) {
-  //     setContacts(parsedContacts);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   localStorage.setItem('contacts', JSON.stringify(contacts));
-  // }, [contacts]);
-
-  // const visibleContacts = getVisibleContacts();
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <>
       <h1>Phonebook</h1>
       <ContactForm> </ContactForm>
       <h2>Contacts</h2>
-      <Filtre
-      // onChange={e => setFilter(e.currentTarget.value)}
-      ></Filtre>
-
-      <ContactList
-      // contacts={visibleContacts}
-      // onDeleteContact={deleteContact}
-      ></ContactList>
+      <Filtre />
+      {isLoading && !error && (
+        <b style={{ marginLeft: 70 }}>Request in progress...</b>
+      )}
+      {error && (
+        <b style={{ marginLeft: 70 }}>
+          The operation failed with error: ${error}
+        </b>
+      )}
+      {!isLoading && !error && <ContactList />}
     </>
   );
 };

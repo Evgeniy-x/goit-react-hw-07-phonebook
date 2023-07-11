@@ -2,26 +2,29 @@
 import css from './Phonebook.module.css';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { addContact } from '../../redux/contactsSlice';
+import { addContact } from '../../redux/contactsOperation';
 
 const ContactForm = () => {
-  const contactsStore = useSelector(state => state.contacts);
+  const contactsStore = useSelector(state => state.contacts.items);
   const dispatch = useDispatch();
 
   function handeleSubmit(e) {
     e.preventDefault();
     const form = e.currentTarget;
 
+    const name = form.elements.name.value;
+    const number = form.elements.number.value;
+
     if (
       contactsStore.filter(elem => elem.name === form.elements.name.value)
-        .length
+        ?.length
     ) {
       alert('Вже є');
       return;
     }
 
-    dispatch(addContact(form.elements.name.value, form.elements.number.value));
-    // onSubmit(name, number);
+    dispatch(addContact({ name, number }));
+
     form.reset();
   }
 
@@ -30,8 +33,6 @@ const ContactForm = () => {
       <label>
         Name <br />
         <input
-          // onChange={e => setName(e.currentTarget.value)}
-          // value={name}
           type="text"
           name="name"
           placeholder="Enter name..."
@@ -45,8 +46,6 @@ const ContactForm = () => {
         {' '}
         Number <br />
         <input
-          // onChange={e => setNumber(e.currentTarget.value)}
-          // value={number}
           type="tel"
           name="number"
           placeholder="Enter number..."

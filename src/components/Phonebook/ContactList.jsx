@@ -1,6 +1,5 @@
 import css from './Phonebook.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-// import { deleteContact } from '../../redux/contactsSlice';
 import { useEffect } from 'react';
 import * as contactsOperation from '../../redux/contactsOperation';
 

@@ -1,5 +1,4 @@
 import * as contactsApi from '../services/contacts-api';
-import * as contactsAction from './contactsActions';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import axios from 'axios';

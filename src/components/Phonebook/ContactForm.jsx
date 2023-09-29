@@ -11,8 +11,6 @@ const ContactForm = () => {
   function handeleSubmit(e) {
     e.preventDefault();
     const form = e.currentTarget;
-    // const form = e.currentTarget;
-    // const form = e.currentTarget.elements;
 
     const name = form.elements.name.value;
     const number = form.elements.number.value;
@@ -28,6 +26,7 @@ const ContactForm = () => {
     dispatch(addContact({ name, number }));
 
     form.reset();
+    // form.reset();
   }
 
   return (

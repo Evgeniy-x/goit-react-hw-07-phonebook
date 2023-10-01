@@ -1,4 +1,5 @@
 import css from './Phonebook.module.css';
+// import css from './Phonebook.module.css';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { addContact } from '../../redux/contactsOperation';
@@ -10,6 +11,7 @@ const ContactForm = () => {
   function handeleSubmit(e) {
     e.preventDefault();
     const form = e.currentTarget;
+    // const form = e.currentTarget.elements;
 
     const name = form.elements.name.value;
     const number = form.elements.number.value;
